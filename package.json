@@ -12,7 +12,7 @@
     "dev:backend": "npm --prefix backend run dev"
   },
   "keywords": [],
-  "author": "",
+  "author": "Praveen Goswami",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.2"
