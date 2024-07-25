@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import connectWithDB from "./db/dbConfig";
 import AppRouter from "./routes/user.route";
@@ -25,8 +25,18 @@ app.use("/api/user", AppRouter);
 app.use("/api/auth", AuthRouter);
 
 
-app.use((error) => {
-    console.log(error);
+//Error handling middleware
+/* The next parameter is required for an error-handling middleware in Express. This parameter is typically not used but must be present to be recognized as an error-handling middleware. */
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+
+    return res.status(statusCode).json({
+        success: false,
+        message,
+        statusCode
+    })
 })
 
 app.listen(PORT, () => {
