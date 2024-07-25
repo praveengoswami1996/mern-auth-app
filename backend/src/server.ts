@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectWithDB from "./db/dbConfig";
 import AppRouter from "./routes/user.route";
+import AuthRouter from "./routes/auth.route";
 
 //Configuring dotenv: It will allow us to access environment variables through process.env
 dotenv.config();
@@ -20,7 +21,8 @@ app.get("/", (req, res) => {
 
 app.use(express.json());
 
-app.use("/api/users", AppRouter);
+app.use("/api/user", AppRouter);
+app.use("/api/auth", AuthRouter);
 
 
 app.use((error) => {
