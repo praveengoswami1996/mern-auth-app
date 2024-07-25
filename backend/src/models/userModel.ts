@@ -1,15 +1,16 @@
 import { Schema, model } from "mongoose";
 
 interface User {
-    name: string;
+    username: string;
     email: string;
     password: string;
 }
 
 const userSchema = new Schema<User>({
-    name: {
+    username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
@@ -20,7 +21,7 @@ const userSchema = new Schema<User>({
         type: String,
         required: true
     }
-})
+}, { timestamps: true });
 
 const User = model<User>('User', userSchema);
 
