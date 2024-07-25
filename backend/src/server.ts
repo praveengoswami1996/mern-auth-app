@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectWithDB from "./db/dbConfig";
-import AppRouter from "./routes/userRoutes";
+import AppRouter from "./routes/user.route";
 
 //Configuring dotenv: It will allow us to access environment variables through process.env
 dotenv.config();
