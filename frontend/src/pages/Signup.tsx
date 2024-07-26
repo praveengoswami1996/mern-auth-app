@@ -1,8 +1,9 @@
 import React from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 interface SignupFormInputs {
-  name: string;
+  username: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -22,53 +23,38 @@ const SignupForm: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-md mx-auto mt-10 mb-10 p-6 bg-white shadow-box rounded-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Signup</h2>
+      <div className="max-w-md mx-auto my-10">
+        <h2 className="text-3xl font-bold text-center mb-6">Sign Up</h2>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-medium mb-2"
-              htmlFor="name"
-            >
-              Name
-            </label>
+          <div className="mb-5">
             <Controller
-              name="name"
+              name="username"
               control={control}
               defaultValue=""
               rules={{
                 required: {
                   value: true,
-                  message: "Name is required"
+                  message: "Username is required"
                 },
-                pattern: {
-                  value: /^[a-zA-Z][a-zA-Z\s'-]*[a-zA-Z]$/,
-                  message: "Please enter a valid name"
-                }
               }}
               render={({ field }) => (
                 <input
                   id="name"
                   type="text"
+                  placeholder="Username"
                   {...field}
-                  className={`w-full p-2 border ${
-                    errors.name ? "border-red-500" : "border-gray-300"
+                  className={`w-full px-4 py-2 border-none bg-gray-100 outline-none ${
+                    errors.username ? "border-red-500" : "border-gray-300"
                   } rounded-md`}
                 />
               )}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            {errors.username && (
+              <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>
             )}
           </div>
 
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-medium mb-2"
-              htmlFor="email"
-            >
-              Email
-            </label>
+          <div className="mb-5">
             <Controller
               name="email"
               control={control}
@@ -87,8 +73,9 @@ const SignupForm: React.FC = () => {
                 <input
                   id="email"
                   type="email"
+                  placeholder="Email"
                   {...field}
-                  className={`w-full p-2 border ${
+                  className={`w-full px-4 py-2 border-none bg-gray-100 outline-none ${
                     errors.email ? "border-red-500" : "border-gray-300"
                   } rounded-md`}
                 />
@@ -101,13 +88,7 @@ const SignupForm: React.FC = () => {
             )}
           </div>
 
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-medium mb-2"
-              htmlFor="password"
-            >
-              Password
-            </label>
+          <div className="mb-5">
             <Controller
               name="password"
               control={control}
@@ -130,8 +111,9 @@ const SignupForm: React.FC = () => {
                 <input
                   id="password"
                   type="password"
+                  placeholder="Password"
                   {...field}
-                  className={`w-full p-2 border ${
+                  className={`w-full px-4 py-2 border-none bg-gray-100 outline-none ${
                     errors.password ? "border-red-500" : "border-gray-300"
                   } rounded-md`}
                 />
@@ -144,13 +126,7 @@ const SignupForm: React.FC = () => {
             )}
           </div>
 
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-medium mb-2"
-              htmlFor="confirmPassword"
-            >
-              Confirm Password
-            </label>
+          <div className="mb-5">
             <Controller
               name="confirmPassword"
               control={control}
@@ -168,8 +144,9 @@ const SignupForm: React.FC = () => {
                 <input
                   id="confirmPassword"
                   type="password"
+                  placeholder="Confirm Password"
                   {...field}
-                  className={`w-full p-2 border ${
+                  className={`w-full px-4 py-2 border-none bg-gray-100 outline-none ${
                     errors.confirmPassword
                       ? "border-red-500"
                       : "border-gray-300"
@@ -186,11 +163,18 @@ const SignupForm: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md"
+            className="w-full bg-slate-600 hover:bg-slate-800 disabled:bg-slate-400 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md uppercase"
           >
-            Signup
+            Sign up
           </button>
         </form>
+
+        <div className="flex gap-2 mt-6 items-center">
+          <p className="text-sm">Already have an account?</p>
+          <Link to="/sign-in">
+            <span className="text-blue-500 text-sm">Sign in</span>
+          </Link>
+        </div>
       </div>
     </div>
   );
