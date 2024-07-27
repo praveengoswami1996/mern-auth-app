@@ -1,24 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 interface SignupFormInputs {
   username: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 }
 
 const SignupForm: React.FC = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<null | string>(null);
+
   const {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
     watch,
   } = useForm<SignupFormInputs>({ mode: "all" });
 
-  const onSubmit: SubmitHandler<SignupFormInputs> = (data) => {
-    
+  const onSubmit: SubmitHandler<SignupFormInputs> = async (formData) => {
+    setIsLoading(true);
+    setError(null);
+    delete formData.confirmPassword;
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if(!data.success) {
+        throw new Error(data.message);
+      }
+      toast.success("Congratulations! You've successfully signed up.")
+      reset();
+      navigate("/sign-in");
+    } catch (error) {
+      const err = error as Error;
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -162,10 +194,11 @@ const SignupForm: React.FC = () => {
           </div>
 
           <button
+            disabled={isLoading}
             type="submit"
             className="w-full bg-slate-600 hover:bg-slate-800 disabled:bg-slate-400 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md uppercase"
           >
-            Sign up
+            { isLoading ? "Signing up...": "Sign up" }
           </button>
         </form>
 

@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectWithDB from "./db/dbConfig";
 import AppRouter from "./routes/user.route";
 import AuthRouter from "./routes/auth.route";
+import cors from "cors";
 
 //Configuring dotenv: It will allow us to access environment variables through process.env
 dotenv.config();
@@ -14,12 +15,19 @@ connectWithDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const corsOptions = {
+    origin: "http://localhost:5173", //allowed origins
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'], //allowed methods
+    credentials: true, //Enables or disables sending cookies and HTTP Authentication information
+}
+
+
+app.use(cors(corsOptions))
+app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send("API is running.....")
 })
-
-app.use(express.json());
 
 app.use("/api/user", AppRouter);
 app.use("/api/auth", AuthRouter);
