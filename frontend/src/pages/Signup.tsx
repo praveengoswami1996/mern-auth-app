@@ -14,7 +14,6 @@ interface SignupFormInputs {
 const SignupForm: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<null | string>(null);
 
   const {
     handleSubmit,
@@ -26,7 +25,6 @@ const SignupForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<SignupFormInputs> = async (formData) => {
     setIsLoading(true);
-    setError(null);
     delete formData.confirmPassword;
     try {
       const response = await fetch("http://localhost:5000/api/auth/signup", {
