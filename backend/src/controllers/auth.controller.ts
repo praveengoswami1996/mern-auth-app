@@ -17,7 +17,7 @@ export const signupController = async (
     })
 
     if(existingUser) {
-      next(errorHandler(400, "Username or email already exists"));
+      return next(errorHandler(400, "Username or email already exists"));
     }
 
     //Hashing the password for security
@@ -45,12 +45,12 @@ export const signinController = async (req:Request, res:Response, next: NextFunc
     })
 
     if(!validUser) {
-      next(errorHandler(404, "User not found"));
+      return next(errorHandler(404, "User not found"));
     } else {
       //Checking if password matches
       const validPassword = bcrypt.compareSync(password, validUser.password);
       if(!validPassword) {
-        next(errorHandler(401, "Invalid login credentials"));
+        return next(errorHandler(401, "Invalid login credentials"));
       }
 
       //Create and sign JWT token
@@ -62,11 +62,7 @@ export const signinController = async (req:Request, res:Response, next: NextFunc
 
       // Set token in cookie
       res.cookie('access_token', token, {
-        // Helps prevent XSS attacks by restricting access to the cookie
         httpOnly: true, 
-        // Ensures the cookie is only sent over HTTPS in production
-        // secure: process.env.NODE_ENV === 'production',
-        // 24 hours 
         maxAge: 24 * 60 * 60 * 1000, 
       });
 

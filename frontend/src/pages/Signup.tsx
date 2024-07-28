@@ -55,7 +55,7 @@ const SignupForm: React.FC = () => {
     <div className="min-h-screen">
       <div className="max-w-md mx-auto my-10">
         <h2 className="text-3xl font-bold text-center mb-6">Sign Up</h2>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-5">
             <Controller
               name="username"

@@ -4,8 +4,8 @@ import {
   Contact,
   Home,
   LandingPage,
-  Login,
   Privacy,
+  Signin,
   Signup,
 } from "./pages";
 import MainLayout from "./layouts/MainLayout";
@@ -19,7 +19,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Home />} />
-          <Route path="/sign-in" element={<Login />} />
+          <Route path="/sign-in" element={<Signin />} />
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/privacy-policy" element={<Privacy />} />
         </Routes>
